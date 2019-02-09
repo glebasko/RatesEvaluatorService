@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace RateEvaluator.Controllers
 {
-    public class ValuesController : ApiController
+    public class RatesController : ApiController
     {
         // GET api/values
         public IEnumerable<string> Get()
