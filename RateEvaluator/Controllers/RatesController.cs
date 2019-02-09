@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RateEvaluator.Data;
+using RateEvaluator.SharedModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,30 +12,25 @@ namespace RateEvaluator.Controllers
     public class RatesController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        // returns XML containing the list of agreements
+        public IEnumerable<Agreement> Get()
         {
-            return new string[] { "value1", "value2" };
+            return LocalDataStorage.Agreements;
         }
 
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
+        //// GET api/values/5
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        public string Put(int id, [FromBody]BaseRate.RateType newBaseRateType)
         {
+            // calculate new interest base rate and return custom xml
+
+            return "Not implemented";
         }
 
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
     }
 }
