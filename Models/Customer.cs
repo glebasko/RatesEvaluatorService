@@ -15,7 +15,7 @@ namespace RateEvaluator.SharedModels
         public Customer(long id, string firstName, string lastName)
         {
             this.Id = id;
-            this.FirstName = FirstName;
+            this.FirstName = firstName;
             this.LastName = lastName;
 
             //Agreements = new List<Agreement>();

@@ -11,20 +11,20 @@ namespace RateEvaluator.Controllers
 {
     public class RatesController : ApiController
     {
-        // GET api/values
+        // GET api/rates
         // returns XML containing the list of agreements
         public IEnumerable<Agreement> Get()
         {
             return LocalDataStorage.Agreements;
         }
 
-        //// GET api/values/5
+        //// GET api/rates/5
         //public string Get(int id)
         //{
         //    return "value";
         //}
 
-        // PUT api/values/5
+        // PUT api/rates/5
         public string Put(int id, [FromBody]BaseRate.RateType newBaseRateType)
         {
             // calculate new interest base rate and return custom xml

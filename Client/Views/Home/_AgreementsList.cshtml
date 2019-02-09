@@ -1,0 +1,56 @@
+﻿@model IEnumerable<RateEvaluator.SharedModels.Agreement>
+
+<p>
+    <h1>Agreements</h1>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BaseRate.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Margin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var agreement in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelagreement => agreement.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelagreement => agreement.Customer.FirstName)
+            @Html.DisplayFor(modelagreement => agreement.Customer.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelagreement => agreement.BaseRate.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelagreement => agreement.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelagreement => agreement.Margin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelagreement => agreement.Duration)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=agreement.Id })
+        </td>
+    </tr>
+}
+
+</table>
