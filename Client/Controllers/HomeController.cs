@@ -17,9 +17,16 @@ namespace Client.Controllers
 
         public async Task<ActionResult> GetAgreementsList()
         {
-            var agreements = await ApiCalls.GetProducts("api/rates");
+            IEnumerable<Agreement> agreements = await ApiCalls.GetAgreements("api/rates");
 
             return PartialView("_AgreementsList", agreements);
+        }
+
+        public async Task<ActionResult> EditAgreement(int id)
+        {
+            Agreement agreement = await ApiCalls.GetAgreement($"api/rates/{id}");
+
+            return View(agreement);
         }
     }
 }

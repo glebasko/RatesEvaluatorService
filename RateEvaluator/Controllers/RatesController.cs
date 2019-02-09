@@ -18,11 +18,11 @@ namespace RateEvaluator.Controllers
             return LocalDataStorage.Agreements;
         }
 
-        //// GET api/rates/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET api/rates/5
+        public Agreement Get(int id)
+        {
+            return LocalDataStorage.Agreements.SingleOrDefault(x => x.Id == id);
+        }
 
         // PUT api/rates/5
         public string Put(int id, [FromBody]BaseRate.RateType newBaseRateType)

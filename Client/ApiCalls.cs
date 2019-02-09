@@ -28,7 +28,7 @@ namespace Client
             //    new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public static async Task<IEnumerable<Agreement>> GetProducts(string path)
+        public static async Task<IEnumerable<Agreement>> GetAgreements(string path)
         {
             IEnumerable<Agreement> agreements = null;
             HttpResponseMessage response = await client.GetAsync(path);
@@ -38,6 +38,18 @@ namespace Client
             }
 
             return agreements;
+        }
+
+        public static async Task<Agreement> GetAgreement(string path)
+        {
+            Agreement agreement = null;
+            HttpResponseMessage response = await client.GetAsync(path);
+            if (response.IsSuccessStatusCode)
+            {
+                agreement = await response.Content.ReadAsAsync<Agreement>();
+            }
+
+            return agreement;
         }
 
     }

@@ -1,0 +1,71 @@
+﻿@model RateEvaluator.SharedModels.Agreement
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Agreement</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div>
+            @Html.LabelFor(model => model.Id)
+            :
+            @Html.ValueFor(model => model.Id)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Customer)
+            :
+            @Html.ValueFor(model => model.Customer.FirstName)
+            @Html.ValueFor(model => model.Customer.LastName)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.BaseRate.Code)
+            :
+            @Html.ValueFor(model => model.BaseRate.Code)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.BaseRate.Value)
+            :
+            @Html.ValueFor(model => model.BaseRate.Value)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Amount)
+            :
+            @Html.ValueFor(model => model.Amount)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Margin)
+            :
+            @Html.ValueFor(model => model.Margin)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Duration)
+            :
+            @Html.ValueFor(model => model.Duration)
+        </div>
+        <div style="margin-top:25px">
+            <label>New base rate code</label> :
+            @Html.DropDownList("BaseRateType",
+            EnumHelper.GetSelectList(typeof(RateEvaluator.SharedModels.BaseRate.RateType)),
+            null,
+            null)
+        </div>
+
+        <div class="form-group" style="margin-top:10px">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to Home Page", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
