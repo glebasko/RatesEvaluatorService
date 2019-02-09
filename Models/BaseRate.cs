@@ -1,4 +1,6 @@
-﻿namespace RateEvaluator.SharedModels
+﻿using System;
+
+namespace RateEvaluator.SharedModels
 {
     public class BaseRate
     {
@@ -24,6 +26,7 @@
 
         public RateType Code { get; set; }
         public float Value { get; set; }
+        public DateTime Date { get; set; }
 
         public BaseRate() { } // for serialization
 

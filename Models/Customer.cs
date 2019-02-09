@@ -8,7 +8,6 @@ namespace RateEvaluator.SharedModels
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        //public List<Agreement> Agreements { get; set; }
 
         public Customer() { }
 
@@ -16,9 +15,7 @@ namespace RateEvaluator.SharedModels
         {
             this.Id = id;
             this.FirstName = firstName;
-            this.LastName = lastName;
-
-            //Agreements = new List<Agreement>();
+            this.LastName = lastName;       
         }
     }
 }

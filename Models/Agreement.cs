@@ -12,9 +12,9 @@ namespace RateEvaluator.SharedModels
         [DataMember]
         public int Amount { get; set; }
         [DataMember]
-        public BaseRate BaseRate { get; set; }
+        public BaseRate.RateType BaseRateType { get; set; }
         [DataMember]
-        public float Margin { get; private set; }
+        public float Margin { get; private set; } // setter is required to allow serialization
         [DataMember]
         public int Duration { get; set; }
         [DataMember]
@@ -22,11 +22,20 @@ namespace RateEvaluator.SharedModels
 
         public Agreement() { } // for serialization
 
-        public Agreement(int id, int amount, BaseRate baseRate, float margin, int duration, Customer customer)
+        public Agreement(int id, int amount, BaseRate.RateType baseRateType, float margin, int duration, Customer customer)
         {
             this.Id = id;
             this.Amount = amount;
-            this.BaseRate = baseRate;
+            this.BaseRateType = baseRateType;
+            this.Margin = margin;
+            this.Duration = duration;
+            this.Customer = customer;
+        }
+
+        public Agreement(int amount, BaseRate.RateType baseRateType, float margin, int duration, Customer customer)
+        {
+            this.Amount = amount;
+            this.BaseRateType = baseRateType;
             this.Margin = margin;
             this.Duration = duration;
             this.Customer = customer;

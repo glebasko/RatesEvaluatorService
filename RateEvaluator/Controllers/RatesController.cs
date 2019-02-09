@@ -11,17 +11,19 @@ namespace RateEvaluator.Controllers
 {
     public class RatesController : ApiController
     {
+        private RatesDatabaseContext db = new RatesDatabaseContext();
+
         // GET api/rates
         // returns XML containing the list of agreements
         public IEnumerable<Agreement> Get()
         {
-            return LocalDataStorage.Agreements;
+            return db.Agreements;
         }
 
         // GET api/rates/5
         public Agreement Get(int id)
         {
-            return LocalDataStorage.Agreements.SingleOrDefault(x => x.Id == id);
+            return db.Agreements.SingleOrDefault(x => x.Id == id);
         }
 
         // PUT api/rates/5
@@ -32,5 +34,14 @@ namespace RateEvaluator.Controllers
             return "Not implemented";
         }
 
+        // disposes dbcontext
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
