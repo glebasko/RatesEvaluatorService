@@ -27,6 +27,7 @@ namespace RateEvaluator
             SaveBaseRatesToDb(baseRates);
         }      
 
+        // seed database with initial data
         private void SeedDatabase()
         {
             using (var db = new RatesDatabaseContext())

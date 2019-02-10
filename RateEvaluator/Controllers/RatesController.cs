@@ -24,7 +24,9 @@ namespace RateEvaluator.Controllers
         }
 
         // GET api/rates
-        // returns XML containing a list of agreements
+        /// <summary>
+        /// returns XML containing a list of all agreements
+        /// </summary>
         public IEnumerable<Agreement> GetAllAgreements()
         {
             IEnumerable<Agreement> agreements = db.Agreements.Include("Customer");
@@ -33,7 +35,9 @@ namespace RateEvaluator.Controllers
         }
 
         // GET api/rates/{id}
-        // Finds and returns an agreement by id
+        /// <summary>
+        /// Finds and returns an agreement by id
+        /// </summary>
         public IHttpActionResult GetAgreement(int id)
         {
             Agreement agreement = db.Agreements.Include(i => i.Customer).SingleOrDefault(x => x.Id == id);
@@ -46,7 +50,9 @@ namespace RateEvaluator.Controllers
         }
 
         // PUT api/rates/{id}
-        // Updates an agreement, calculates the current and new interest rates and returns AgreementExtended object
+        /// <summary>
+        /// Updates an agreement, calculates the current and new interest rates and returns AgreementExtended object
+        /// </summary>
         [HttpPut]
         public IHttpActionResult UpdateAgreement(int id, [FromBody]BaseRate.RateType newBaseRateType)
         {
