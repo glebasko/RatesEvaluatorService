@@ -25,7 +25,7 @@ namespace RateEvaluator.Controllers
 
         // GET api/rates
         /// <summary>
-        /// returns XML containing a list of all agreements
+        /// Returns XML containing a list of all agreements
         /// </summary>
         public IEnumerable<Agreement> GetAllAgreements()
         {
