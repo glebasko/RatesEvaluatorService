@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RateEvaluator.Controllers;
 using RateEvaluator.SharedModels;
-using System;
+using System.Web.Http.Results;
 
 namespace RateEvaluator.Tests
 {
@@ -49,10 +49,10 @@ namespace RateEvaluator.Tests
             Assert.AreEqual(1, db.Agreements.Local.Count);
 
             var ratesController = new RatesController(db);
-            Agreement resultAgreement = ratesController.GetAgreement(agreement.Id);
-
-            Assert.IsNotNull(resultAgreement);
-            Assert.AreEqual(agreement.Id, resultAgreement.Id);
+            var httpResult = ratesController.GetAgreement(agreement.Id) as OkNegotiatedContentResult<Agreement>;
+            
+            Assert.IsNotNull(httpResult);
+            Assert.AreEqual(agreement.Id, httpResult.Content.Id);
         }
 
         [TestMethod]
@@ -66,9 +66,9 @@ namespace RateEvaluator.Tests
             Assert.AreEqual(1, db.Agreements.Local.Count);
 
             var ratesController = new RatesController(db);
-            Agreement resultAgreement = ratesController.GetAgreement(agreement.Id++);
+            var httpResult = ratesController.GetAgreement(agreement.Id++);
 
-            Assert.IsNull(resultAgreement);
+            Assert.IsTrue(httpResult is NotFoundResult);
         }
 
         [TestMethod]
@@ -93,10 +93,22 @@ namespace RateEvaluator.Tests
 
             var ratesController = new RatesController(db);
 
-            AgreementExtended agreementExtended = ratesController.UpdateAgreement(agreement.Id, baseRate2.Code);
+            var httpResult = ratesController.UpdateAgreement(agreement.Id, baseRate2.Code);
+            // might returned either ExceptionResult, OkNegotiatedContentResult<AgreementExtended>, or NotFoundResult
+            // check is required
 
-            Assert.AreEqual(agreement.Id, agreementExtended.Id);
-            Assert.AreEqual(baseRate2.Code, agreementExtended.NewBaseRateType);
+            Assert.IsFalse(httpResult is NotFoundResult, "NotFoundResult");
+
+            var exceptionResult = httpResult as ExceptionResult;
+            if (exceptionResult != null)
+            {
+                throw new AssertFailedException(exceptionResult.Exception.Message);
+            }
+            var contentResult = httpResult as OkNegotiatedContentResult<AgreementExtended>;
+
+            Assert.IsFalse(contentResult == null);
+            Assert.AreEqual(agreement.Id, contentResult.Content.Id);
+            Assert.AreEqual(baseRate2.Code, contentResult.Content.NewBaseRateType);
         }
     }
 }

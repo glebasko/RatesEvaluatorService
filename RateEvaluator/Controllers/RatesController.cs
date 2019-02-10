@@ -1,9 +1,13 @@
 ﻿using RateEvaluator.BusinessLogic;
 using RateEvaluator.Data;
 using RateEvaluator.SharedModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace RateEvaluator.Controllers
@@ -30,32 +34,59 @@ namespace RateEvaluator.Controllers
 
         // GET api/rates/{id}
         // Finds and returns an agreement by id
-        public Agreement GetAgreement(int id)
+        public IHttpActionResult GetAgreement(int id)
         {
-            return db.Agreements.Include("Customer").SingleOrDefault(x => x.Id == id);
+            Agreement agreement = db.Agreements.Include(i => i.Customer).SingleOrDefault(x => x.Id == id);
+            if (agreement == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(agreement);
         }
 
-        // PUT api/rates/5
-        // Updates an agreements, calculates current and new interest rates and returns AgreementExtended object
+        // PUT api/rates/{id}
+        // Updates an agreement, calculates the current and new interest rates and returns AgreementExtended object
         [HttpPut]
-        public AgreementExtended UpdateAgreement(int id, [FromBody]BaseRate.RateType newBaseRateType)
+        public IHttpActionResult UpdateAgreement(int id, [FromBody]BaseRate.RateType newBaseRateType)
         {
-            Agreement agreement = db.Agreements.Include("Customer").Single(x => x.Id == id);
+            Agreement agreement = db.Agreements.Include("Customer").SingleOrDefault(x => x.Id == id);
+            if (agreement == null)
+            {
+                return NotFound();
+            }
+
             BaseRate.RateType oldBaseRateType = agreement.BaseRateType;
             agreement.BaseRateType = newBaseRateType;
 
             db.MarkAsModified(agreement);
-            db.SaveChanges();
 
-            // TODO: check if base rate record exists
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
 
-            float currentBaseRateValue = db.BaseRates.Single(x => x.Code == oldBaseRateType).Value;
-            float newBaseRateValue = db.BaseRates.Single(x => x.Code == newBaseRateType).Value;
+            // check if base rate record exists
 
+            BaseRate currentBaseRate = db.BaseRates.SingleOrDefault(x => x.Code == oldBaseRateType);
+            BaseRate newBaseRate = db.BaseRates.SingleOrDefault(x => x.Code == newBaseRateType);
+            if(currentBaseRate == null || newBaseRate == null)
+            {
+                // Better solution would be to throw a custom exception with an error message    
+                      
+                return InternalServerError(new ArgumentNullException("Base Rate record was not found"));
+            }
+
+            // to client we need to return an agreement with an old base rate type
             agreement.BaseRateType = oldBaseRateType;
-            var agremeentExtended = Agreements.GetExtendedAgreement(agreement, newBaseRateType, currentBaseRateValue, newBaseRateValue);
-    
-            return agremeentExtended;
+
+            var agremeentExtended = Agreements.GetExtendedAgreement(agreement, newBaseRateType, currentBaseRate.Value, newBaseRate.Value);
+
+            return Ok(agremeentExtended);
         }
 
         // disposes dbcontext

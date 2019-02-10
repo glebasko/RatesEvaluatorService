@@ -73,9 +73,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="TestData.cs" />
-    <Compile Include="TestDbSet.cs" />
+    <Compile Include="Mocks\TestDbSet.cs" />
     <Compile Include="TestRatesController.cs" />
-    <Compile Include="TestRatesDatabaseContext.cs" />
+    <Compile Include="Mocks\TestRatesDatabaseContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
