@@ -16,27 +16,28 @@ namespace RateEvaluator
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-            HttpClient client = ConfigureHttpClient();
-
             HttpResponseMessage response = null;
             string result = null;
             List<BaseRate> baseRates = new List<BaseRate>();
 
-            foreach (string baseRateType in Enum.GetNames(typeof (BaseRate.RateType)))
+            using (HttpClient client = ConfigureHttpClient())
             {
-                response = await client.GetAsync($"/webservices/VilibidVilibor/VilibidVilibor.asmx/getLatestVilibRate?RateType={baseRateType}");
-
-                if (response.IsSuccessStatusCode)
+                foreach (string baseRateType in Enum.GetNames(typeof(BaseRate.RateType)))
                 {
-                    result = await response.Content.ReadAsStringAsync();
+                    response = await client.GetAsync($"/webservices/VilibidVilibor/VilibidVilibor.asmx/getLatestVilibRate?RateType={baseRateType}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        result = await response.Content.ReadAsStringAsync();
+                    }
+
+                    BaseRate baseRate = new BaseRate();
+                    baseRate.Code = (BaseRate.RateType)Enum.Parse(typeof(BaseRate.RateType), baseRateType);
+                    baseRate.Date = DateTime.Today;
+                    baseRate.Value = GetBaseRate(result);
+
+                    baseRates.Add(baseRate);
                 }
-
-                BaseRate baseRate = new BaseRate();
-                baseRate.Code = (BaseRate.RateType) Enum.Parse(typeof(BaseRate.RateType), baseRateType);
-                baseRate.Date = DateTime.Today; 
-                baseRate.Value = GetBaseRate(result);
-
-                baseRates.Add(baseRate);
             }
 
             return baseRates;

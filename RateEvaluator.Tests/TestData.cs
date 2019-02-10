@@ -14,8 +14,6 @@ namespace RateEvaluator.Tests
 
         public static Agreement GetTestAgreement1(Customer customer, BaseRate.RateType baseRateType)
         {
-            //var customer = GetTestCustomer();
-
             var agreement = new Agreement(100, baseRateType, 1.5f, 10, customer);
             agreement.Id = 1;
             agreement.CustomerId = customer.Id;
@@ -25,8 +23,6 @@ namespace RateEvaluator.Tests
 
         public static Agreement GetTestAgreement2(Customer customer, BaseRate.RateType baseRateType)
         {
-            //var customer = GetTestCustomer();
-
             var agreement = new Agreement(200, baseRateType, 2.5f, 20, customer);
             agreement.Id = 2;
             agreement.CustomerId = customer.Id;

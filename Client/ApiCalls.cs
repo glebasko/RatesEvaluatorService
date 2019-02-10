@@ -12,50 +12,57 @@ namespace Client
 {
     public class ApiCalls
     {
-        static HttpClient client;
-
-        static ApiCalls()
+        private static HttpClient ConfigureHttpClient()
         {
-            InitHttpClient();
-        }
-
-        private static void InitHttpClient()
-        {
-            client = new HttpClient();
+            var client = new HttpClient();
 
             client.BaseAddress = new Uri("http://localhost:50754/");
             client.DefaultRequestHeaders.Accept.Clear();
-            //client.DefaultRequestHeaders.Accept.Add(
-            //    new MediaTypeWithQualityHeaderValue("application/json"));
+
+            return client;
         }
 
         public static async Task<IEnumerable<Agreement>> GetAgreementsAsync(string path)
         {
+            HttpResponseMessage response = null;
+            using (HttpClient client = ConfigureHttpClient())
+            {
+                 response = await client.GetAsync(path);
+            }
+
             IEnumerable<Agreement> agreements = null;
-            HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
                 agreements = await response.Content.ReadAsAsync<IEnumerable<Agreement>>();
             }
 
-            return agreements;
+            return agreements;       
         }
 
         public static async Task<Agreement> GetAgreementAsync(string path)
         {
+            HttpResponseMessage response = null;
+            using (HttpClient client = ConfigureHttpClient())
+            {
+                response = await client.GetAsync(path);
+            }
+
             Agreement agreement = null;
-            HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
                 agreement = await response.Content.ReadAsAsync<Agreement>();
             }
-
+            
             return agreement;
         }
 
         public static async Task<AgreementExtended> UpdateAgreementBaseRate(string path, BaseRate.RateType newBaseRateType)
         {
-            HttpResponseMessage response = await client.PutAsJsonAsync(path, newBaseRateType);
+            HttpResponseMessage response = null;
+            using (HttpClient client = ConfigureHttpClient())
+            {        
+                response = await client.PutAsJsonAsync(path, newBaseRateType);
+            }
 
             AgreementExtended result = null;
             if (response.IsSuccessStatusCode)

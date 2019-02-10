@@ -28,7 +28,7 @@ namespace RateEvaluator.SharedModels
         public float Value { get; set; }
         public DateTime Date { get; set; }
 
-        public BaseRate() { } // for serialization
+        public BaseRate() { }
 
         public BaseRate(RateType code, float value, DateTime date)
         {

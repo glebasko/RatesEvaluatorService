@@ -25,7 +25,7 @@ namespace RateEvaluator.SharedModels
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
 
-        public Agreement() { } // for serialization
+        public Agreement() { }
 
         public Agreement(int amount, BaseRate.RateType baseRateType, float margin, int duration, Customer customer)
         {
