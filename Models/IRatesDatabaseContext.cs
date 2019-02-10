@@ -1,10 +1,5 @@
-﻿using RateEvaluator.SharedModels;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RateEvaluator.SharedModels 
 {
@@ -15,6 +10,9 @@ namespace RateEvaluator.SharedModels
         DbSet<BaseRate> BaseRates { get; }
 
         int SaveChanges();
+
         void MarkAsModified(Agreement item);
+        void MarkAsModified(Customer item);
+        void MarkAsModified(BaseRate item);
     }
 }

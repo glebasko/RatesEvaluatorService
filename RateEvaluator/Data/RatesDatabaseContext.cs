@@ -17,5 +17,15 @@ namespace RateEvaluator.Data
         {
             Entry(agreement).State = EntityState.Modified;
         }
+
+        public void MarkAsModified(Customer customer)
+        {
+            Entry(customer).State = EntityState.Modified;
+        }
+
+        public void MarkAsModified(BaseRate baseRate)
+        {
+            Entry(baseRate).State = EntityState.Modified;
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace RateEvaluator.Controllers
         }
 
         // GET api/rates
-        // returns XML containing the list of agreements
+        // returns XML containing a list of agreements
         public IEnumerable<Agreement> Get()
         {
             IEnumerable<Agreement> agreements = db.Agreements.Include("Customer");
