@@ -21,22 +21,24 @@ namespace RateEvaluator.Controllers
 
         // GET api/rates
         // returns XML containing a list of agreements
-        public IEnumerable<Agreement> Get()
+        public IEnumerable<Agreement> GetAllAgreements()
         {
             IEnumerable<Agreement> agreements = db.Agreements.Include("Customer");
 
             return agreements;
         }
 
-        // GET api/rates/5
-        public Agreement Get(int id)
+        // GET api/rates/{id}
+        // Finds and returns an agreement by id
+        public Agreement GetAgreement(int id)
         {
             return db.Agreements.Include("Customer").SingleOrDefault(x => x.Id == id);
         }
 
         // PUT api/rates/5
+        // Updates an agreements, calculates current and new interest rates and returns AgreementExtended object
         [HttpPut]
-        public AgreementExtended Put(int id, [FromBody]BaseRate.RateType newBaseRateType)
+        public AgreementExtended UpdateAgreement(int id, [FromBody]BaseRate.RateType newBaseRateType)
         {
             Agreement agreement = db.Agreements.Include("Customer").Single(x => x.Id == id);
             BaseRate.RateType oldBaseRateType = agreement.BaseRateType;

@@ -12,7 +12,6 @@ namespace RateEvaluator.Tests
     {
         public TestRatesDatabaseContext()
         {
-            //this.Agreements = new TestAgreementDbSet();
             this.Agreements = new TestDbSet<Agreement>();
             this.Customers = new TestDbSet<Customer>();
             this.BaseRates = new TestDbSet<BaseRate>();
