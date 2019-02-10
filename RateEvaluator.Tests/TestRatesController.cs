@@ -9,6 +9,7 @@ namespace RateEvaluator.Tests
     public class TestRatesController
     {
         [TestMethod]
+        // testing http Get (GetAllAgreements)
         public void Test_ShouldReturnNotEmptyAgreementsList()
         {
             var db = new TestRatesDatabaseContext();
@@ -27,6 +28,7 @@ namespace RateEvaluator.Tests
         }
 
         [TestMethod]
+        // testing http Get (GetAllAgreements)
         public void Test_ShouldReturnEmptyAgreementsList()
         {
             var db = new TestRatesDatabaseContext();
@@ -39,6 +41,7 @@ namespace RateEvaluator.Tests
         }
 
         [TestMethod]
+        // testing http Get (GetAgreement)
         public void Test_ShouldReturnAgreementByTheSameId()
         {
             var db = new TestRatesDatabaseContext();
@@ -56,6 +59,7 @@ namespace RateEvaluator.Tests
         }
 
         [TestMethod]
+        // testing http Get (GetAgreement)
         public void Test_ShouldNotReturnAgreement()
         {
             var db = new TestRatesDatabaseContext();
@@ -72,6 +76,7 @@ namespace RateEvaluator.Tests
         }
 
         [TestMethod]
+        // testing http Put (UpdateAgreement)
         public void Test_ShouldUpdateAgreement()
         {
             var db = new TestRatesDatabaseContext();
