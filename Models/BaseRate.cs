@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace RateEvaluator.SharedModels
 {
@@ -30,11 +31,11 @@ namespace RateEvaluator.SharedModels
 
         public BaseRate() { } // for serialization
 
-        public BaseRate(int id, RateType code, float value)
+        public BaseRate(RateType code, float value, DateTime date)
         {
-            this.Id = id;
             this.Code = code;
             this.Value = value;
+            this.Date = date;
         }
     }
 }

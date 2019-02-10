@@ -11,7 +11,7 @@ using System.Web.Routing;
 
 namespace RateEvaluator
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class WebApiApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -22,15 +22,16 @@ namespace RateEvaluator
 
             SetDataDirectory();
             SeedDatabase();
-            
-            //BaseRatesImporter.ImportLatestBaseRatesAsync().GetAwaiter().GetResult(); 
+
+            IEnumerable<BaseRate> baseRates = BaseRatesImporter.ImportLatestBaseRatesAsync().GetAwaiter().GetResult();
+            SaveBaseRatesToDb(baseRates);
         }      
 
         private void SeedDatabase()
         {
             using (var db = new RatesDatabaseContext())
             {
-                if(db.Customers.Count() > 0)
+                if (db.Customers.Count() > 0)
                 {
                     return;
                 }
@@ -52,6 +53,16 @@ namespace RateEvaluator
         {
             string projectRootDirectory = HttpRuntime.AppDomainAppPath;
             AppDomain.CurrentDomain.SetData("DataDirectory", $"{projectRootDirectory}Data");
+        }
+
+        private void SaveBaseRatesToDb(IEnumerable<BaseRate> baseRates)
+        {
+            using (var db = new RatesDatabaseContext())
+            {
+                db.Database.ExecuteSqlCommand("TRUNCATE TABLE [BaseRates]");
+                db.BaseRates.AddRange(baseRates);
+                db.SaveChanges();
+            }
         }
     }
 }

@@ -22,16 +22,6 @@ namespace RateEvaluator.SharedModels
 
         public Agreement() { } // for serialization
 
-        public Agreement(int id, int amount, BaseRate.RateType baseRateType, float margin, int duration, Customer customer)
-        {
-            this.Id = id;
-            this.Amount = amount;
-            this.BaseRateType = baseRateType;
-            this.Margin = margin;
-            this.Duration = duration;
-            this.Customer = customer;
-        }
-
         public Agreement(int amount, BaseRate.RateType baseRateType, float margin, int duration, Customer customer)
         {
             this.Amount = amount;
