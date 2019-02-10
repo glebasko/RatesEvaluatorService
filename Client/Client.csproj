@@ -180,6 +180,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_AgreementsList.cshtml" />
     <Content Include="Views\Home\EditAgreement.cshtml" />
+    <Content Include="Views\Home\Result.cshtml" />
+    <Content Include="Views\Home\AgreementExtended.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

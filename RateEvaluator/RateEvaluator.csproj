@@ -163,7 +163,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="BaseRatesImporter.cs" />
+    <Compile Include="BusinessLogic\Agreements.cs" />
+    <Compile Include="BusinessLogic\BaseRatesImporter.cs" />
     <Compile Include="Controllers\RatesController.cs" />
     <Compile Include="Data\RatesDatabaseContext.cs" />
     <Compile Include="Global.asax.cs">

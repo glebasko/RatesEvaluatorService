@@ -1,9 +1,6 @@
 ﻿using RateEvaluator.SharedModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Client.Controllers
@@ -27,6 +24,14 @@ namespace Client.Controllers
             Agreement agreement = await ApiCalls.GetAgreementAsync($"api/rates/{id}");
 
             return View(agreement);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditAgreement(int id, BaseRate.RateType newBaseRateType)
+        {
+            AgreementExtended agreementExtended = await ApiCalls.UpdateAgreementBaseRate($"api/rates/{id}", newBaseRateType);
+
+            return View("AgreementExtended", agreementExtended);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace RateEvaluator.SharedModels
@@ -18,6 +19,10 @@ namespace RateEvaluator.SharedModels
         [DataMember]
         public int Duration { get; set; }
         [DataMember]
+        public long CustomerId { get; set; }
+
+        [DataMember]
+        [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
 
         public Agreement() { } // for serialization

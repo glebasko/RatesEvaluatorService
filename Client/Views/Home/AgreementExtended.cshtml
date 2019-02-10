@@ -1,0 +1,45 @@
+﻿@model RateEvaluator.SharedModels.AgreementExtended
+
+<div>
+    <h4>Agreement</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt> @Html.DisplayNameFor(model => model.Id) </dt>
+        <dd> @Html.DisplayFor(model => model.Id) </dd>
+
+        <dt> @Html.DisplayNameFor(model => model.Customer) </dt>
+        <dd> 
+            @Html.DisplayFor(model => model.Customer.FirstName) 
+            @Html.DisplayFor(model => model.Customer.LastName) 
+        </dd>
+
+        <dt> @Html.DisplayNameFor(model => model.Amount) </dt>
+        <dd> @Html.DisplayFor(model => model.Amount) </dd>
+
+        <dt> @Html.DisplayNameFor(model => model.Margin) </dt>
+        <dd> @Html.DisplayFor(model => model.Margin) </dd>
+
+        <dt> @Html.DisplayNameFor(model => model.Duration) </dt>
+        <dd> @Html.DisplayFor(model => model.Duration) </dd>
+
+        <dt> @Html.DisplayNameFor(model => model.BaseRateType) </dt>
+        <dd> @Html.DisplayFor(model => model.BaseRateType) </dd>
+
+        <br />
+
+        <dt> @Html.DisplayNameFor(model => model.NewBaseRateType) </dt>
+        <dd> @Html.DisplayFor(model => model.NewBaseRateType) </dd>
+
+        <dt> @Html.DisplayNameFor(model => model.CurrentInterestRate) </dt>
+        <dd> @Html.DisplayFor(model => model.CurrentInterestRate) </dd>
+
+        <dt> @Html.DisplayNameFor(model => model.NewInterestRate) </dt>
+        <dd> @Html.DisplayFor(model => model.NewInterestRate) </dd>
+
+        <dt> @Html.DisplayNameFor(model => model.DifferenceBetweenInterestRates) </dt>
+        <dd> @Html.DisplayFor(model => model.DifferenceBetweenInterestRates) </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to Home Page", "Index")
+</p>

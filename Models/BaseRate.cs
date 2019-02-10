@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Xml.Serialization;
 
 namespace RateEvaluator.SharedModels
 {
@@ -7,20 +6,20 @@ namespace RateEvaluator.SharedModels
     {
         public enum RateType
         {
-            VILIBIDovernight,
-            VILIBID1w,
-            VILIBID2w,
-            VILIBID1m,
-            VILIBID3m,
-            VILIBID6m,
-            VILIBID1y,
-            VILIBORovernight,
-            VILIBOR1w,
-            VILIBOR2w,
-            VILIBOR1m,
-            VILIBOR3m,
-            VILIBOR6m,
-            VILIBOR1y
+            VILIBIDovernight = 0,
+            VILIBID1w = 1,
+            VILIBID2w = 2,
+            VILIBID1m = 3,
+            VILIBID3m = 4,
+            VILIBID6m = 5,
+            VILIBID1y = 6,
+            VILIBORovernight = 7,
+            VILIBOR1w = 8,
+            VILIBOR2w = 9,
+            VILIBOR1m = 10,
+            VILIBOR3m = 11,
+            VILIBOR6m = 12,
+            VILIBOR1y = 13
         }
 
         public int Id { get; set; }

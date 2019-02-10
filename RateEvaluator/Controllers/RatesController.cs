@@ -1,10 +1,9 @@
-﻿using RateEvaluator.Data;
+﻿using RateEvaluator.BusinessLogic;
+using RateEvaluator.Data;
 using RateEvaluator.SharedModels;
-using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace RateEvaluator.Controllers
@@ -17,21 +16,37 @@ namespace RateEvaluator.Controllers
         // returns XML containing the list of agreements
         public IEnumerable<Agreement> Get()
         {
-            return db.Agreements;
+            IEnumerable<Agreement> agreements = db.Agreements.Include("Customer");
+
+            return agreements;
         }
 
         // GET api/rates/5
         public Agreement Get(int id)
         {
-            return db.Agreements.SingleOrDefault(x => x.Id == id);
+            return db.Agreements.Include("Customer").SingleOrDefault(x => x.Id == id);
         }
 
         // PUT api/rates/5
-        public string Put(int id, [FromBody]BaseRate.RateType newBaseRateType)
+        [HttpPut]
+        public AgreementExtended Put(int id, [FromBody]BaseRate.RateType newBaseRateType)
         {
-            // calculate new interest base rate and return custom xml
+            Agreement agreement = db.Agreements.Include("Customer").Single(x => x.Id == id);
+            BaseRate.RateType oldBaseRateType = agreement.BaseRateType;
+            agreement.BaseRateType = newBaseRateType;
 
-            return "Not implemented";
+            db.Entry(agreement).State = EntityState.Modified;
+            db.SaveChanges();
+
+            // TODO: check if base rate record exists
+
+            float currentBaseRateValue = db.BaseRates.Single(x => x.Code == oldBaseRateType).Value;
+            float newBaseRateValue = db.BaseRates.Single(x => x.Code == newBaseRateType).Value;
+
+            agreement.BaseRateType = oldBaseRateType;
+            var agremeentExtended = Agreements.GetExtendedAgreement(agreement, newBaseRateType, currentBaseRateValue, newBaseRateValue);
+    
+            return agremeentExtended;
         }
 
         // disposes dbcontext
