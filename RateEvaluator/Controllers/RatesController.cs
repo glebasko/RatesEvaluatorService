@@ -10,7 +10,14 @@ namespace RateEvaluator.Controllers
 {
     public class RatesController : ApiController
     {
-        private RatesDatabaseContext db = new RatesDatabaseContext();
+        private IRatesDatabaseContext db = new RatesDatabaseContext();
+
+        public RatesController() { }
+
+        public RatesController(IRatesDatabaseContext dbContext)
+        {
+            db = dbContext;
+        }
 
         // GET api/rates
         // returns XML containing the list of agreements
@@ -35,7 +42,7 @@ namespace RateEvaluator.Controllers
             BaseRate.RateType oldBaseRateType = agreement.BaseRateType;
             agreement.BaseRateType = newBaseRateType;
 
-            db.Entry(agreement).State = EntityState.Modified;
+            db.MarkAsModified(agreement);
             db.SaveChanges();
 
             // TODO: check if base rate record exists
