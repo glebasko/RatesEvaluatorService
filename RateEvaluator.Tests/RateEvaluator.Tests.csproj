@@ -73,6 +73,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="TestAgreementDbSet.cs" />
+    <Compile Include="TestData.cs" />
     <Compile Include="TestDbSet.cs" />
     <Compile Include="TestRatesController.cs" />
     <Compile Include="TestRatesDatabaseContext.cs" />
